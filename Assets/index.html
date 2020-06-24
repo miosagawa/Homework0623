@@ -1,0 +1,136 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+</head>
+</head>
+
+
+    <body>        
+        <button onclick="delayedAlert();">Show alert box after 60 seconds</button>
+
+        <h1>Four choice quiz</h1>
+        <hr>
+        <h2>Question</h2>
+        <div id="text_q"></div>
+
+        <h2>Choice</h2>
+        <div id="text_s"></div>
+
+        <h2>Answer</h2>
+        <div id="text_a"></div>
+
+        <h2>Initial</h2>
+        <div id="text_i">
+        <table>
+            <form>
+            <input type="text"><input type="submit">
+            </form>
+        </table>
+        </div>
+
+        <script type="text/javascript">
+
+            //問題と解答
+            qa = new Array();
+
+            // 1.変数名として適切なものを選択しなさい
+            qa[0] = ["Choose a suitable variable name.","1_name"," name","default","$",4];
+            // 2.コメントの表記方法として適切なものを全て選択しなさい
+            qa[1] = ["Select an inappropriate comment notation.","// comment","// // comment","/* comment */","/* /* comment */ */",4];
+            // 3.文字列 '@$'を処理した結果が'@$'のままとなるメソッドはどれか。
+            qa[2] = ["Which method keeps the result of processing @$ as @$?","escape","encodeURI","encodeURIComponent","htmlspecialchars",2];
+            // 4.以下のスクリプトのうち、結果がtrueになるものを選択しなさい。
+            qa[3] = ["Select one of the following scripts that gives a true result.","isFinite(Infinity)","isFinite(NaN)","isFinite('0')","iNumber.isFinite('0')",3];
+            // 5.以下のスクリプトを実行した結果の数値が10進表記で10にならないものを選択しなさい。
+            qa[4] = ["Please select the value which is not 10 in decimal notation as a result of executing the following script.","parseInt('010');","parseInt('10+30');","parseInt('10',16);","parseInt('10');",3];
+            // 6.以下のスクリプトを実行した結果、trueになるものを選びなさい。
+            qa[5] = ["Select the one that becomes true as a result of executing the following script.","'123' === String('123')","new String('123') === String('123')","new String('123') === '123'","123 === new Number(123)",1];
+            // 7.以下の選択肢のうち、プリミティブな文字列が生成されるスクリプトを選びなさい。
+            qa[6] = ["Select a script that generates a primitive string from the following options.","Number(100)","new Date()","String('abc')","new String('abc')",3];
+            // 8.以下のスクリプトを実行した結果、数値の3を要素として持つ配列を生成するものを選びなさい。
+            qa[7] = ["As a result of executing the following script, select the one that produces an array having the numerical value 3 as an element.","var array = Array(3);","var array = {3};","var array = new Array(3);","var array = [3];",4];
+            // 9.JavaScriptのオブジェクト指向について、間違っているものを選択しなさい。
+            qa[8] = ["Select the wrong thing about JavaScript object orientation.","Inheritance can be defined using the prototype property.","Only members that are public can be created because there is no syntax for member permissions.","You can change the inheriting parent at any time, but it will not be reflected in already created instances.","Members can be defined using the prototype property.",2];
+            // 10.void演算子は右辺の式を評価した結果、何を返すのか正しいものを一つ選択しなさい。
+            qa[9] = ["The void operator evaluates the expression on the right side, and select the correct one to return.","returns undefined.","Returns 0.","returns false.","The result of NOT operation is returned.",1]; 
+
+            //初期設定
+            q_sel = 4; //選択肢の数
+
+            setReady();
+
+            //初期設定
+            function setReady() {
+            count = 0; //問題番号
+            ansers = new Array(); //解答記録
+            
+            //最初の問題
+            quiz();
+            }
+
+            //問題表示
+            function quiz() {
+            //問題
+            document.getElementById("text_q").innerHTML = (count + 1) + "Q：" + qa[count][0];
+            //選択肢
+            s = "";
+            for (n=1;n<=q_sel;n++) {
+                s += "【<a href='javascript:anser(" + n + ")'>" + n + "：" + qa[count][n] + "</a>】";
+            }
+            document.getElementById("text_s").innerHTML = s;
+            }
+            //解答表示
+            function anser(num) {
+            var s;
+            s = (count + 1) + "Q：";
+            //答え合わせ
+            if (num == qa[count][q_sel + 1]) {
+            //正解
+                // s += "correct" + qa[count][num];
+                s += "correct";
+                ansers[count] = "○";
+            } else {
+                // s += "wrong" + qa[count][num];
+                s += "wrong";
+                ansers[count] = "×";
+            }
+            document.getElementById("text_a").innerHTML = s;
+
+            //次の問題を表示
+            count++;
+            if (count < qa.length) {
+            quiz();
+            } else {
+
+            //終了
+            s = "<table border='2'><caption>Results announcement</caption>";
+            //1行目
+            // s += "<tr><th>Question</th>";
+            for (n=0;n<qa.length;n++) {
+                s += "<th>" + (n+1) + "</th>";
+            }
+            s += "</tr>";
+            //2行目
+            // s += "<tr><th>Grade</th>";
+            for (n=0;n<qa.length;n++) {
+                s += "<td>" + ansers[n] + "</td>";
+            }
+            s += "</tr>";
+            // s += "</table>";
+            document.getElementById("text_q").innerHTML = s;
+            document.getElementById("text_s").innerHTML = s;
+	        }
+            }
+            var timeoutID;
+
+            function delayedAlert() {
+            timeoutID = window.setTimeout(window.alert, 1*1000, 'time out！');
+            }
+                              
+        </script>
+    </body>
+</html>
